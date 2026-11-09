@@ -82,7 +82,9 @@ node --test openviking-local/test/config.test.mjs
 
 插件测试使用本机 DSH 依赖。DSH 安装在 npm 默认位置以外时，可通过 `DSH_INSTALL` 指定其包目录。
 
-## 来源
+## 许可证与来源
+
+本仓库新增的代码按 [MIT 许可证](LICENSE) 发布。下列上游组件保留各自的版权声明和许可证。
 
 思考摘要基于 [Rosmarinus-Young/dsh-thinking-summary](https://github.com/Rosmarinus-Young/dsh-thinking-summary)，保留 [MIT 许可证](dsh-desktop/integrations/dsh-thinking-summary/LICENSE)。任务账本借用了 [dsh-board](https://github.com/fenglufa/dsh-board) 的数据模型，详见[来源说明](dsh-desktop/integrations/dsh-workspace-ledger/UPSTREAM.md)。指挥台的 DSH 宿主桥接基于 [BeforeWave/dsh-with-chatgpt](https://github.com/BeforeWave/dsh-with-chatgpt)，保留 [MIT 许可证](dsh-desktop/vendor/LICENSE)。
 
