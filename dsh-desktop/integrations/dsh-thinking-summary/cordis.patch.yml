@@ -1,0 +1,8 @@
+# dsh-thinking-summary bundle patch
+#
+# 通过官方 CLI 安装时（dsh plugin --profile web add dsh-thinking-summary），
+# CLI 会把本包加入 profile 的 bundles 栈，并合并此 patch：
+# 挂载 Host 插件行（id: thinking-summary）。
+- insert:
+    - id: thinking-summary
+      name: 'dsh-thinking-summary'

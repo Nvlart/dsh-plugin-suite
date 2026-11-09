@@ -1,0 +1,12 @@
+/** Optional fixed-stage diagnostics; no raw exception content or request data. */
+import {appendFileSync} from 'node:fs';import {resolve,relative,isAbsolute} from 'node:path';import {fileURLToPath} from 'node:url';
+const stages=new Set(['control.service.send','control.response','control.error','service.prompt','service.workspace','service.preset','service.lookup','service.reserve','service.createSession','service.attach','service.pump','service.project','service.dispatch','driver.modules','driver.session.id','driver.workspace.access','driver.workspace.resolve','driver.workspace.create','driver.model.selection','driver.agents.create','driver.workspace.attach','driver.followup','mcp.control.request','mcp.control.decode','mcp.control.error','mcp.send.invoke','mcp.send.project','mcp.tool.error']);
+const codes=new Set(['INTERNAL','UNAUTHORIZED','INVALID_ARGUMENT','INVALID_PROMPT','WORKSPACE_FORBIDDEN','PRESET_FORBIDDEN','PRESET_NOT_CONFIGURED','TASK_NOT_FOUND','TASK_REGISTRY_FULL','QUEUE_FULL','QUARANTINE_ACTIVE','HOST_API_MISMATCH','HOST_SERVICE_MISSING','SESSION_NOT_LIVE','DISPATCH_FAILED','CONTROL_UNAVAILABLE','CONTROL_FAILED','ECONNREFUSED','ECONNRESET','ETIMEDOUT']);
+const types=new Set(['Error','TypeError','RangeError','SyntaxError','BridgeError','TimeoutError','AbortError']);
+let sink=null,sequence=0;
+const configured=process.env.DSH_BRIDGE_STAGE_LOG;
+if(configured){const base=fileURLToPath(new URL('../integration-local/',import.meta.url));const target=resolve(configured),rel=relative(base,target);if(rel&&!isAbsolute(rel)&&rel!=='..'&&!rel.startsWith('..\\'))sink=event=>appendFileSync(target,JSON.stringify(event)+'\n');}
+export function setStageSink(value){sink=typeof value==='function'?value:null;sequence=0;}
+export function traceStage(stage,state,error){if(!sink||!stages.has(stage)||!['enter','exit','error'].includes(state))return;try{const record={sequence:++sequence,stage,state};if(state==='error'){record.errorType=types.has(error?.name)?error.name:'OtherError';record.errorCode=codes.has(error?.code)?error.code:null;}sink(record)}catch{/* diagnostic failure must never change operation results */}}
+export function traceSync(stage,action){traceStage(stage,'enter');try{const result=action();traceStage(stage,'exit');return result}catch(error){traceStage(stage,'error',error);throw error}}
+export async function traceAsync(stage,action){traceStage(stage,'enter');try{const result=await action();traceStage(stage,'exit');return result}catch(error){traceStage(stage,'error',error);throw error}}

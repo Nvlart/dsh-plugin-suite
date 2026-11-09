@@ -1,0 +1,12 @@
+{
+  "name": "@local/dsh-workspace-ledger",
+  "version": "0.1.8-local.1",
+  "description": "对话任务账本：进度、检查点、文件变化核对与手动跨会话恢复",
+  "type": "module",
+  "exports": {".": "./lib/index.mjs", "./client": "./lib/client.js", "./package.json": "./package.json"},
+  "files": ["lib", "vendor", "cordis.patch.yml", "README.md", "UPSTREAM.md", "FEATURES.zh.md"],
+  "license": "MIT",
+  "engines": {"node": ">=24", "dsh": "0.2.2-rc.1"},
+  "peerDependencies": {"@deepseek-ai/dsh-agent": "~0.2.2-rc.1", "@deepseek-ai/dsh-session": "~0.2.2-rc.1", "@deepseek-ai/dsh-llm": "~0.2.2-rc.1", "@deepseek-ai/dsh-tools": "~0.2.2-rc.1", "@deepseek-ai/schemastery": "~3.19.0"},
+  "dsh": {"bundle": {"patch": "./cordis.patch.yml"}, "client": {"platform": "web", "inject": ["@deepseek-ai/dsh-client-ui-slots", "@deepseek-ai/dsh-client-ui-workspace", "@deepseek-ai/dsh-client-ui-conversation"]}}
+}

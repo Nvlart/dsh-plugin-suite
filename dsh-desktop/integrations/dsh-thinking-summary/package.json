@@ -1,0 +1,42 @@
+{
+  "name": "dsh-thinking-summary",
+  "version": "1.1.2-local.1",
+  "description": "DSH web plugin: 中文思考摘要 — 在原生 Deep diving 状态右侧显示当前计划，并在每段思考下方插入中文摘要卡片（由 deepseek-v4-flash 生成）。",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "LICENSE",
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=20",
+    "dsh": "0.2.2-rc.1"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "~3.19.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    }
+  }
+}

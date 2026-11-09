@@ -1,0 +1,15 @@
+node_modules/
+.venv/
+runtime/
+data/
+output/
+dist/
+.env
+.env.*
+*.dpapi
+*.log
+*.bak
+*.exe
+*.zip
+ov.conf
+daemon.json

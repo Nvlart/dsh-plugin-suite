@@ -1,0 +1,35 @@
+{
+  "name": "@beforewave-local/dsh-chatgpt-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A three-tool MCP bridge that lets ChatGPT Web drive native DSH sessions through an OpenAI Secure MCP Tunnel.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./mcp": "./src/mcp/server.js",
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test --test-isolation=none test/*.test.js",
+    "check:compat": "node tools/check-compat.js",
+    "mock:tunnel": "node tools/mock-tunnel.js"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh": "0.2.2-rc.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh": {
+      "optional": false
+    }
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
